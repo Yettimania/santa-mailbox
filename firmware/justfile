@@ -1,0 +1,19 @@
+output:= "firmware"
+target := "thumbv6m-none-eabi"
+path := './target' / target / 'release' / output
+
+build:
+	echo 'Building target...'
+	cargo build --release --target {{target}}
+	
+transfer:
+	echo 'Transfering to pico...'
+	sudo elf2uf2-rs -d {{path}}
+	
+mount dev:
+	echo 'Mounting pico to /dev/{{dev}}...'
+	sudo mount /dev/{{dev}} /mnt/pico
+
+umount:
+	echo 'Unmounting pico...'
+	sudo umount /mnt/pico
