@@ -1,11 +1,3 @@
-//! # Pico PWM Micro Servo Example
-//!
-//! Moves the micro servo on a Pico board using the PWM peripheral.
-//!
-//! This will move in different positions the motor attached to GP1.
-//!
-//! See the `Cargo.toml` file for Copyright and license details.
-
 #![no_std]
 #![no_main]
 
@@ -30,12 +22,6 @@ use rp_pico::hal::pac;
 use rp_pico::hal;
 
 /// Entry point to our bare-metal application.
-///
-/// The `#[rp2040_hal::entry]` macro ensures the Cortex-M start-up code calls this function
-/// as soon as all global variables and the spinlock are initialised.
-///
-/// The function configures the RP2040 peripherals, then fades the LED in an
-/// infinite loop.
 #[rp2040_hal::entry]
 fn main() -> ! {
     // Grab our singleton objects
@@ -87,29 +73,10 @@ fn main() -> ! {
     let channel = &mut pwm.channel_b;
     channel.output_to(pins.gpio1);
 
-    channel.set_duty(65100);
-    // Infinite loop, moving micro servo from one position to another.
-    // You may need to adjust the pulse width since several servos from
-    // different manufacturers respond differently.
+    channel.set_duty(64500);
+
     loop {
         let _ = channel.get_duty();
-        // count_down.start(2000.millis());
-        // let _ = nb::block!(count_down.wait());
-
-        // 0° to 90°
-        // channel.set_duty(3930);
-        // count_down.start(10000.millis());
-        // let _ = nb::block!(count_down.wait());
-
-        // // 90° to 180°
-        // channel.set_duty(7860);
-        // count_down.start(10000.millis());
-        // let _ = nb::block!(count_down.wait());
-
-        // // 180° to 90°
-        // channel.set_duty(3930);
-        // count_down.start(10000.millis());
-        // let _ = nb::block!(count_down.wait());
     }
 }
 
